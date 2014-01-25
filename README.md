@@ -1,5 +1,7 @@
 # Erlang client library for Neo4J
 
+Bug fix fork.
+
 This is a lightweight wrapper for [Neo4j REST API](http://docs.neo4j.org/chunked/stable/rest-api.html).
 
 ## What?
