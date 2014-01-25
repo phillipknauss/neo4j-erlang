@@ -27,8 +27,8 @@
         , transaction_execute_commit/2
         , transaction_rollback/1
         %% Cypher
-        , cypher/2
-        , cypher/3
+        %, cypher/2
+        %, cypher/3
         %% Nodes
         , create_node/1
         , create_node/2
@@ -135,7 +135,7 @@
 -type neo4j_root() :: proplists:proplist().
 -type neo4j_node() :: proplists:proplist().
 -type neo4j_relationship() :: proplists:proplist().
--type cypher_result() :: proplists:proplist().
+%-type cypher_result() :: proplists:proplist().
 -type neo4j_id() :: proplists:proplist().
 -type neo4j_index() :: proplists:proplist().
 -type neo4j_transaction() :: proplists:proplist().
@@ -312,18 +312,18 @@ transaction_execute_commit(Neo, Query) ->
 %%
 %% http://docs.neo4j.org/chunked/stable/rest-api-cypher.html#rest-api-send-a-query
 %%
--spec cypher(neo4j_root(), binary()) -> cypher_result().
-cypher(Neo, Query) ->
-  cypher(Neo, Query, [{<<>>, <<>>}]).
+%-spec cypher(neo4j_root(), binary()) -> cypher_result().
+%cypher(Neo, Query) ->
+%  cypher(Neo, Query, [{<<>>, <<>>}]).
 
 %%
 %% http://docs.neo4j.org/chunked/stable/rest-api-cypher.html#rest-api-send-queries-with-parameters
 %%
--spec cypher(neo4j_root(), binary(), proplists:proplist()) -> cypher_result() | {error, term()}.
-cypher(Neo, Query, Params) ->
-  {_, URI} = lists:keyfind(<<"cypher">>, 1, Neo),
-  Payload = jsonx:encode([{query, Query}, {params, Params}]),
-  create(URI, Payload).
+%-spec cypher(neo4j_root(), binary(), proplists:proplist()) -> cypher_result() | {error, term()}.
+%cypher(Neo, Query, Params) ->
+%  {_, URI} = lists:keyfind(<<"cypher">>, 1, Neo),
+%	Payload = jsonx:encode([{query, Query}, {params, Params}]),
+%  create(URI, Payload).
 
 %%_* Nodes ---------------------------------------------------------------------
 
@@ -1537,7 +1537,7 @@ start_app(App, N) ->
 
 -spec id_to_binary(neo4j_id()) -> binary() | {error, invalid_id}.
 id_to_binary(Id) when is_integer(Id) ->
-  integer_to_binary(Id, 10);
+  list_to_binary(integer_to_list(Id));
 id_to_binary(Id) when is_list(Id) ->
   list_to_binary(Id);
 id_to_binary(Id) when is_binary(Id) ->
